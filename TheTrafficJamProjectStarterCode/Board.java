@@ -23,7 +23,7 @@ public class Board {
 	 * @param cols number of columns on the board
 	 */
 	public Board(int rows, int cols) {
-		//TODO finish implementing this constructor
+		grid = new Vehicle[rows][cols];
 	}
 	
 	/**
@@ -31,7 +31,7 @@ public class Board {
 	 */
 	public int getNumCols() {
 		//TODO change this method, which should return the number of columns the grid has
-		return 0;
+		return grid[0].length;
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class Board {
 	 */
 	public int getNumRows() {
 		//TODO change this method, which should return the number of rows the grid has
-		return 0;
+		return grid.length;
 	}
 	
 	/**
@@ -50,8 +50,7 @@ public class Board {
 	 * @return a pointer to the Vehicle object present on that space, if no Vehicle is present, null is returned
 	 */
 	public Vehicle getVehicleAt(Location s) {
-		//TODO change this method
-		return null;
+		return grid[s.getRow()][s.getCol()];
 	}
 
 	/**
@@ -64,7 +63,10 @@ public class Board {
 	 * @param length number of spaces the vehicle occupies on the board
 	 */
 	public void addVehicle(VehicleType type, int startRow, int startCol, boolean vert, int length) {
-		//TODO implement this method, which should addAVehicle to the grid
+		Vehicle newVehicle = new Vehicle(type, startRow, startCol, vert, length);
+		for(Location location : newVehicle.locationsOn()) {
+			grid[location.getRow()][location.getCol()] = newVehicle;
+		}
 	}
 
 	/**
@@ -75,8 +77,22 @@ public class Board {
 	 * @return whether or not the move actually happened
 	 */
 	public boolean moveVehicleAt(Location start, int numSpaces) {
-		//TODO change this method to implementing moving a vehicle that is on a certain row/column a certain number of spaces
-		return false;
+		if(grid[start.getRow()][start.getCol()] == null) {
+			return false;
+		}
+		if(canMoveAVehicleAt(start, numSpaces)) {
+			Vehicle startVehicle = grid[start.getRow()][start.getCol()];
+			addVehicle(startVehicle.getVehicleType(), startVehicle.potentialMove(numSpaces).getRow(), startVehicle.potentialMove(numSpaces).getCol(), startVehicle.isVerticle(), startVehicle.getLength());
+			for(Location location : startVehicle.locationsOn()) {
+				if(grid[location.getRow()][location.getCol()] == startVehicle) {
+					grid[location.getRow()][location.getCol()] = null;
+				}
+				
+			}
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	/**
@@ -89,7 +105,22 @@ public class Board {
 	 * @return whether or not the move is possible
 	 */
 	public boolean canMoveAVehicleAt(Location start, int numSpaces) {
-		return false;
+		if(grid[start.getRow()][start.getCol()] == null) {
+			return false;
+		}
+		Vehicle startVehicle = grid[start.getRow()][start.getCol()];
+		for(Location location : startVehicle.locationsPath(numSpaces)) {
+			try {
+				if(grid[location.getRow()][location.getCol()] != null) {
+					return false;
+				}
+			}
+			catch(ArrayIndexOutOfBoundsException e) {
+				//do i get points off if i do this? i can also check if location.getRow/Col is negative but this works too
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	// This method helps create a string version of the board
