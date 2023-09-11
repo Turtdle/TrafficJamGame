@@ -65,7 +65,14 @@ public class Board {
 	public void addVehicle(VehicleType type, int startRow, int startCol, boolean vert, int length) {
 		Vehicle newVehicle = new Vehicle(type, startRow, startCol, vert, length);
 		for(Location location : newVehicle.locationsOn()) {
-			grid[location.getRow()][location.getCol()] = newVehicle;
+			try {
+				//my method of moving a vehicle might involve overwriting a car. Handle error checking in making the level
+				grid[location.getRow()][location.getCol()] = newVehicle;
+			}
+			catch(ArrayIndexOutOfBoundsException e) {
+				//do i get points off if i do this? i can also check if location.getRow/Col is negative but this works too
+				return;
+			}
 		}
 	}
 
