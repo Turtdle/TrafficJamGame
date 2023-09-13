@@ -7,17 +7,21 @@ public class Level {
 	//TODO fill out this class with a Level constructor
 	//all the other methods necessary and any other instance variables needed
 	public Level(int nRows, int nCols) {
-		
+		board = new Board(nRows, nCols);
 	}
 	
 	/**
 	 * @return the number of columns on the board
 	 */
 	public int getColumns() {
-		//TODO: have this return the number of columns in the level
-		return 0;
+		return board.getNumCols();
 	}
-	
+	public int getRows() {
+		return board.getNumRows();
+	}
+	public Board getBoard() {
+		return board;
+	}
 	//Methods already defined for you
 	/**
 	 * generates the string representation of the level, including the row and column headers to make it look like

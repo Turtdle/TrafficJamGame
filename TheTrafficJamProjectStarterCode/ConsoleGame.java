@@ -22,15 +22,29 @@ public class ConsoleGame {
 	
 	public ConsoleGame() {
 		level = new Level(NUM_ROWS, NUM_COLS);
+		//TEMP LEVEL TEMP LEVEL TEMP LEVEL TEMP LEVEL TEMP LEVEL
+		level.getBoard().addVehicle(VehicleType.MYCAR, 2, 0, false, 2);
+		level.getBoard().addVehicle(VehicleType.TRUCK, 2, 2, true, 3);
 	}
 	
 	public void playGame() {
-		/* TODO: This is the only method you'll need to fill in, which should be the loop that 
-		 * continually asks the user for a location and a number and then tries to move that location by
-		 * that many spaces.  The following line just prints out one version of the grid (once you have the board up
-		 * and running, this should print something out that is more significant)
-		 */
-		System.out.println(level);  //use this line to print out the current level with the header row information
+		boolean hasWon = false;
+		Location selectedLocation;
+		int distance = 0;
+		int moves = 0;
+		while(!hasWon) {
+			System.out.println(level);
+			selectedLocation = getLocationFromUser(NUM_ROWS, NUM_COLS);
+			distance = getInteger("Enter the amount of tiles to move (moves: " + String.valueOf(moves) + "): " );
+			if(level.getBoard().canMoveAVehicleAt(selectedLocation, distance)) {
+				level.getBoard().moveVehicleAt(selectedLocation, distance);
+				moves++;
+			}else {
+				System.out.println("You cant move there or there is no vehicle at selected location");
+			}
+
+		}
+		  //use this line to print out the current level with the header row information
 	}
 
 	/**
