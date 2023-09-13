@@ -3,11 +3,13 @@ import java.util.*;
 
 public class Level {	
 	private Board board;
+	private Location winLocation;
 	
 	//TODO fill out this class with a Level constructor
 	//all the other methods necessary and any other instance variables needed
-	public Level(int nRows, int nCols) {
+	public Level(int nRows, int nCols, Location winLocation) {
 		board = new Board(nRows, nCols);
+		this.winLocation = winLocation;
 	}
 	
 	/**
@@ -21,6 +23,9 @@ public class Level {
 	}
 	public Board getBoard() {
 		return board;
+	}
+	public Location getWinLocation() {
+		return winLocation;
 	}
 	//Methods already defined for you
 	/**

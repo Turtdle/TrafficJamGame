@@ -21,7 +21,8 @@ public class ConsoleGame {
 	}
 	
 	public ConsoleGame() {
-		level = new Level(NUM_ROWS, NUM_COLS);
+		Location winLocation = new Location(2, 5);
+		level = new Level(NUM_ROWS, NUM_COLS, winLocation);
 		//TEMP LEVEL TEMP LEVEL TEMP LEVEL TEMP LEVEL TEMP LEVEL
 		level.getBoard().addVehicle(VehicleType.MYCAR, 2, 0, false, 2);
 		level.getBoard().addVehicle(VehicleType.TRUCK, 2, 2, true, 3);
@@ -42,9 +43,18 @@ public class ConsoleGame {
 			}else {
 				System.out.println("You cant move there or there is no vehicle at selected location");
 			}
+			
+			if(level.getBoard().getVehicleAt(level.getWinLocation()) != null) {
+				if(level.getBoard().getVehicleAt(level.getWinLocation()).getVehicleType() == VehicleType.MYCAR) {
+					hasWon = true;
+				}
+			}
+
 
 		}
-		  //use this line to print out the current level with the header row information
+		System.out.println(level);
+		System.out.println("You  win");
+
 	}
 
 	/**
