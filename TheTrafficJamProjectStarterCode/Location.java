@@ -22,4 +22,7 @@ public class Location {
 	public void setCol(int col) {
 		this.col = col;
 	}
+	public void print() {
+		System.out.println(String.valueOf(row) + " " +String.valueOf(col));
+	}
 }

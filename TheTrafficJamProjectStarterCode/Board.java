@@ -62,18 +62,22 @@ public class Board {
 	 * @param vert true if the vehicle should be vertical
 	 * @param length number of spaces the vehicle occupies on the board
 	 */
-	public void addVehicle(VehicleType type, int startRow, int startCol, boolean vert, int length) {
+	public Vehicle addVehicle(VehicleType type, int startRow, int startCol, boolean vert, int length) {
 		Vehicle newVehicle = new Vehicle(type, startRow, startCol, vert, length);
 		for(Location location : newVehicle.locationsOn()) {
+
 			try {
 				//my method of moving a vehicle might involve overwriting a car. Handle error checking in making the level
 				grid[location.getRow()][location.getCol()] = newVehicle;
+
+
 			}
 			catch(ArrayIndexOutOfBoundsException e) {
 				//do i get points off if i do this? i can also check if location.getRow/Col is negative but this works too
-				return;
+				return null;
 			}
 		}
+			return newVehicle;
 	}
 
 	/**
@@ -83,22 +87,26 @@ public class Board {
 	 * @param numSpaces the number of spaces to be moved by the vehicle (can be positive or negative)
 	 * @return whether or not the move actually happened
 	 */
-	public boolean moveVehicleAt(Location start, int numSpaces) {
+	
+	
+	public Vehicle moveVehicleAt(Location start, int numSpaces) {
 		if(grid[start.getRow()][start.getCol()] == null) {
-			return false;
+			return null;
 		}
 		if(canMoveAVehicleAt(start, numSpaces)) {
 			Vehicle startVehicle = grid[start.getRow()][start.getCol()];
-			addVehicle(startVehicle.getVehicleType(), startVehicle.potentialMove(numSpaces).getRow(), startVehicle.potentialMove(numSpaces).getCol(), startVehicle.isVerticle(), startVehicle.getLength());
+			Vehicle newVehicle = addVehicle(startVehicle.getVehicleType(), startVehicle.potentialMove(numSpaces).getRow(), startVehicle.potentialMove(numSpaces).getCol(), startVehicle.isVerticle(), startVehicle.getLength());
 			for(Location location : startVehicle.locationsOn()) {
+				
 				if(grid[location.getRow()][location.getCol()] == startVehicle) {
 					grid[location.getRow()][location.getCol()] = null;
 				}
 				
+				
 			}
-			return true;
+			return newVehicle;
 		}else{
-			return false;
+			return null;
 		}
 	}
 	

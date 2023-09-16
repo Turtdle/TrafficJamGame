@@ -81,11 +81,15 @@ public class Vehicle {
 	 */
 	public Location[] locationsOn() {
 		Location[] locations = new Location[length];
+
 		for(int i = 0; i < length; i++) {
+
 			if(verticle) {
 				locations[i] = new Location(row + i, col);
+
 			}else{
 				locations[i] = new Location(row , col + i);
+
 			}
 		}
 		return locations;
