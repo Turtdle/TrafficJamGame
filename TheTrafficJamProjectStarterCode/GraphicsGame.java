@@ -1,5 +1,6 @@
 import acm.program.*;
 
+import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
@@ -247,9 +248,9 @@ public class GraphicsGame extends GraphicsProgram {
 
                     if (level.getBoard().getVehicleAt(level.getWinLocation()) != null) {
                         if (level.getBoard().getVehicleAt(level.getWinLocation()).getVehicleType() == VehicleType.MYCAR) {
-                        	GLabel winMessage = new GLabel("YOU WIN", PROGRAM_WIDTH/2-35,PROGRAM_HEIGHT/2);
-                        	add(winMessage);
-
+                        	GLabel winMessage = new GLabel("YOU WIN", PROGRAM_WIDTH/2-100,PROGRAM_HEIGHT/2);
+                        	//Why is there no glabel dot set size or glabel dot set scale
+                        	winMessage.setFont(new Font("new font", 1, 50));
                         } else {
                             drawLevel();
                             selectedVehicle = null;
