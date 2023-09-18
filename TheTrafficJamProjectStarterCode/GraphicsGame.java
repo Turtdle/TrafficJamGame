@@ -18,17 +18,10 @@ public class GraphicsGame extends GraphicsProgram {
     public static final String IMG_FILENAME_PATH = "images/";
     public static final String IMG_EXTENSION = ".png";
     public static final String VERTICAL_IMG_FILENAME = "_vert";
-    private boolean mouseDown = false;
+    
     private double[] mouseOriginalLoc = new double[2];
     private Level level;
-    private ArrayList < Vehicle > vehicles = new ArrayList();
-    public ArrayList < Vehicle > getVehicles() {
-        return vehicles;
-    }
-
-    public void setVehicles(ArrayList < Vehicle > vehicles) {
-        this.vehicles = vehicles;
-    }
+    private ArrayList < Vehicle > vehicles = new ArrayList<Vehicle>();
 
     private Vehicle selectedVehicle;
 
@@ -57,11 +50,10 @@ public class GraphicsGame extends GraphicsProgram {
             v3.isVerticle(),
             v3.getLength()));
 
-        // TODO write this part, which is like your main function
         addMouseListeners();
         drawLevel();
 
-        drawCars(vehicles);
+
 
     }
 
@@ -69,7 +61,7 @@ public class GraphicsGame extends GraphicsProgram {
 
         drawGridLines();
         drawWinningTile();
-
+        drawCars(vehicles);
     }
 
     /**
@@ -78,9 +70,6 @@ public class GraphicsGame extends GraphicsProgram {
      */
     private void drawWinningTile() {
         GLabel exit = new GLabel("Exit", (level.getWinLocation().getCol() + 1) * cellWidth() - cellWidth() / 2 - 10, (level.getWinLocation().getRow()) * cellHeight() + cellHeight() / 2);
-
-        //exit.setLocation(level.getWinLocation().getCol()*cellWidth(), level.getWinLocation().getRow()*cellHeight());
-
         add(exit);
     }
 
@@ -147,7 +136,6 @@ public class GraphicsGame extends GraphicsProgram {
         add(vehicle);
     }
 
-    // TODO implement the mouse listeners here
 
     /**
      * Given a xy coordinates, return the Vehicle that is currently at those x
@@ -238,7 +226,6 @@ public class GraphicsGame extends GraphicsProgram {
     public void mousePressed(MouseEvent e) {
 
         if (getVehicleFromXY(e.getX(), e.getY()) != null) {
-            mouseDown = true;
             mouseOriginalLoc[0] = e.getX();
             mouseOriginalLoc[1] = e.getY();
             selectedVehicle = getVehicleFromXY(e.getX(), e.getY());
@@ -247,7 +234,6 @@ public class GraphicsGame extends GraphicsProgram {
     }
     @Override
     public void mouseReleased(MouseEvent e) {
-        mouseDown = false;
         if (selectedVehicle != null) {
             if (calculateNumSpacesMoved(mouseOriginalLoc[0], mouseOriginalLoc[1], e.getX(), e.getY(), selectedVehicle.isVerticle()) != 0) {
                 int moves = calculateNumSpacesMoved(mouseOriginalLoc[0], mouseOriginalLoc[1], e.getX(), e.getY(), selectedVehicle.isVerticle());
@@ -266,17 +252,17 @@ public class GraphicsGame extends GraphicsProgram {
 
                         } else {
                             drawLevel();
-                            drawCars(vehicles);
                             selectedVehicle = null;
                         }
                     } else {
                         drawLevel();
-                        drawCars(vehicles);
                         selectedVehicle = null;
 
                     }
 
                 }
+            }else {
+            	selectedVehicle = null;
             }
         }
 
