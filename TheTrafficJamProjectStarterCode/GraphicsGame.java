@@ -247,8 +247,8 @@ public class GraphicsGame extends GraphicsProgram {
 
                     if (level.getBoard().getVehicleAt(level.getWinLocation()) != null) {
                         if (level.getBoard().getVehicleAt(level.getWinLocation()).getVehicleType() == VehicleType.MYCAR) {
-                            //ILL ADD A WIN MESSAGE LATER ITS 7 AND I HAVENT HAD LUNCH OR DINNER 
-                            System.out.println("YOU WIN");
+                        	GLabel winMessage = new GLabel("YOU WIN", PROGRAM_WIDTH/2-35,PROGRAM_HEIGHT/2);
+                        	add(winMessage);
 
                         } else {
                             drawLevel();
