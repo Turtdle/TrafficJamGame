@@ -1,5 +1,6 @@
 import acm.program.*;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -31,26 +32,18 @@ public class GraphicsGame extends GraphicsProgram {
     }
 
     public void run() {
-        level = new Level(10, 10, new Location(0, 5));
-        Vehicle v = new Vehicle(VehicleType.AUTO, 1, 2, true, 2);
-        vehicles.add(level.getBoard().addVehicle(v.getVehicleType(),
-            v.getsRow(),
-            v.getsCol(),
-            v.isVerticle(),
-            v.getLength()));
-        Vehicle v2 = new Vehicle(VehicleType.AUTO, 5, 6, false, 2);
-        vehicles.add(level.getBoard().addVehicle(v.getVehicleType(),
-            v2.getsRow(),
-            v2.getsCol(),
-            v2.isVerticle(),
-            v2.getLength()));
-        Vehicle v3 = new Vehicle(VehicleType.MYCAR, 8, 5, true, 2);
-        vehicles.add(level.getBoard().addVehicle(v3.getVehicleType(),
-            v3.getsRow(),
-            v3.getsCol(),
-            v3.isVerticle(),
-            v3.getLength()));
-
+        level = new Level(6, 6, new Location(2, 5));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.AUTO, 0, 1, false, 2));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.AUTO, 1, 5, true, 2));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.MYCAR, 2, 1, false, 2));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.AUTO, 4, 1, false, 2));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.AUTO, 5, 1, false, 2));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.AUTO, 4, 0, true, 2));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.TRUCK, 1, 0, true, 3));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.TRUCK, 3, 1, false, 3));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.TRUCK, 3, 4, true, 3));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.TRUCK, 0, 3, true, 3));
+        vehicles.add(level.getBoard().addVehicle(VehicleType.AUTO, 4, 5, true, 2));
         addMouseListeners();
         drawLevel();
 
@@ -61,8 +54,10 @@ public class GraphicsGame extends GraphicsProgram {
     private void drawLevel() {
 
         drawGridLines();
+        
         drawWinningTile();
         drawCars(vehicles);
+
     }
 
     /**
@@ -70,6 +65,10 @@ public class GraphicsGame extends GraphicsProgram {
      * the winning tile.
      */
     private void drawWinningTile() {
+    	GRect exitRect = new GRect(level.getWinLocation().getCol() * cellWidth(), level.getWinLocation().getRow() * cellHeight(), cellWidth(), cellHeight());
+    	exitRect.setFillColor(Color.red);
+    	exitRect.setFilled(true);
+    	add(exitRect);
         GLabel exit = new GLabel("Exit", (level.getWinLocation().getCol() + 1) * cellWidth() - cellWidth() / 2 - 10, (level.getWinLocation().getRow()) * cellHeight() + cellHeight() / 2);
         add(exit);
     }
@@ -251,6 +250,7 @@ public class GraphicsGame extends GraphicsProgram {
                         	GLabel winMessage = new GLabel("YOU WIN", PROGRAM_WIDTH/2-100,PROGRAM_HEIGHT/2);
                         	//Why is there no glabel dot set size or glabel dot set scale
                         	winMessage.setFont(new Font("new font", 1, 50));
+                        	add(winMessage);
                         } else {
                             drawLevel();
                             selectedVehicle = null;
