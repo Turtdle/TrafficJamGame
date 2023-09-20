@@ -108,7 +108,7 @@ public class GraphicsGame extends GraphicsProgram {
      * that vehicle to then create a GImage and add it to the screen. Make sure
      * to use the constants for the image path ("/images"), the extension ".png"
      * and the additional suffix to the filename if the object is vertical when
-     * creating your GImage. Also make sure to set the images size according to
+     * creating your GImage. Also make sure to set the images size Saccording to
      * the size of your spaces
      * 
      * @param v
